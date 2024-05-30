@@ -1,6 +1,6 @@
 # music
 
-A new Flutter project.
+Project Mobile II Playlist Music
 
 ## Getting Started
 
