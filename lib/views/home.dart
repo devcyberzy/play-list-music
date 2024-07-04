@@ -20,10 +20,10 @@ class Home extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.search, color: whiteColor),
+            icon: const Icon(Icons.search, color: whiteColor),
           )
         ],
-        leading: Icon(
+        leading: const Icon(
           Icons.sort_rounded,
           color: whiteColor,
         ),
@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
         ),
         builder: (BuildContext context, snapshot) {
           if (snapshot.data == null) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.data!.isEmpty) {
@@ -58,14 +58,14 @@ class Home extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: snapshot.data!.length,
                 itemBuilder: (
                   BuildContext context,
                   int index,
                 ) {
                   return Container(
-                    margin: EdgeInsets.only(bottom: 4),
+                    margin: const EdgeInsets.only(bottom: 4),
                     child: Obx(
                       () => ListTile(
                         shape: RoundedRectangleBorder(
@@ -89,21 +89,28 @@ class Home extends StatelessWidget {
                         leading: QueryArtworkWidget(
                           id: snapshot.data![index].id,
                           type: ArtworkType.AUDIO,
-                          nullArtworkWidget: Icon(
+                          nullArtworkWidget: const Icon(
                             Icons.music_note,
                             color: whiteColor,
                             size: 32,
                           ),
                         ),
-                        trailing: controller.Playindex.value == index && controller.isPlaying.value
-                            ? Icon(
+                        trailing: controller.playIndex.value == index &&
+                                controller.isPlaying.value
+                            ? const Icon(
                                 Icons.play_arrow,
                                 color: whiteColor,
                                 size: 26,
                               )
                             : null,
                         onTap: () {
-                          Get.to(() => Player());
+                          Get.to(
+                            () => Player(
+                              data: snapshot.data!,
+                            ),
+                            transition: Transition.downToUp,
+                          );
+                          controller.PlaySong(snapshot.data![index].uri, index);
                         },
                       ),
                     ),
